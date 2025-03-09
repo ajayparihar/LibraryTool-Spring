@@ -1,10 +1,34 @@
+/**
+ * Data Transfer Object (DTO) for outgoing book responses.
+ * This class represents the data structure used when returning book information to clients.
+ * It includes all book properties, including system-managed fields like ID.
+ */
 package com.example.library.dto;
 
 public class BookResponseDTO {
+    /**
+     * The unique identifier of the book
+     */
     private Long bookId;
+
+    /**
+     * The title/name of the book
+     */
     private String name;
+
+    /**
+     * The author of the book
+     */
     private String author;
+
+    /**
+     * The genre/category of the book (e.g., Fiction, Non-fiction, etc.)
+     */
     private String genre;
+
+    /**
+     * The language in which the book is written
+     */
     private String language;
 
     // Getters and Setters
