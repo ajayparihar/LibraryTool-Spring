@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Implementation Examples - Library Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .scenario {
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            background: #f8f9fa;
+        }
+        
+        .example-flow {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .step {
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid #e1e1e1;
+        }
+
+        .code-output {
+            background: #2d3436;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+        }
+
+        .implementation-note {
+            background: #e8f5e9;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>Documentation</h2>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#book-operations">Book Operations</a></li>
+                <li><a href="#lending-operations">Lending Operations</a></li>
+                <li><a href="#implementation-details">Implementation Details</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <h1>Real Implementation Examples</h1>
+
+            <div class="card" id="book-operations">
+                <h2>Book Management Operations</h2>
+
+                <div class="implementation-note">
+                    <strong>Implementation Note:</strong>
+                    <p>The Book entity in our system is defined with the following fields:</p>
+                    <ul>
+                        <li>bookId (Long): Unique identifier</li>
+                        <li>name (String): Book title</li>
+                        <li>author (String): Book author</li>
+                        <li>genre (String): Book category</li>
+                        <li>language (String): Book language</li>
+                    </ul>
+                </div>
+
+                <div class="scenario">
+                    <h3>Scenario 1: Adding a New Book</h3>
+                    <p>Adding "Clean Code" by Robert C. Martin to the library system</p>
+                    
+                    <div class="example-flow">
+                        <div class="step">
+                            <p>API Endpoint: POST /books</p>
+                            <div class="code-output">
+                                // Request Body
+                                {
+                                    "name": "Clean Code",
+                                    "author": "Robert C. Martin",
+                                    "genre": "Programming",
+                                    "language": "English"
+                                }
+
+                                // Response (200 OK)
+                                {
+                                    "bookId": 1,
+                                    "name": "Clean Code",
+                                    "author": "Robert C. Martin",
+                                    "genre": "Programming",
+                                    "language": "English"
+                                }</div>
+                            <p>Implementation: BookController.addBook() method</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <h3>Scenario 2: Retrieving Book Details</h3>
+                    <p>Getting information about a specific book</p>
+                    
+                    <div class="example-flow">
+                        <div class="step">
+                            <p>API Endpoint: GET /books/{id}</p>
+                            <div class="code-output">
+                                // Request: GET /books/1
+                                
+                                // Response (200 OK)
+                                {
+                                    "bookId": 1,
+                                    "name": "Clean Code",
+                                    "author": "Robert C. Martin",
+                                    "genre": "Programming",
+                                    "language": "English"
+                                }</div>
+                            <p>Implementation: BookController.getBookById() method</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="lending-operations">
+                <h2>Lending System Operations</h2>
+
+                <div class="implementation-note">
+                    <strong>Implementation Note:</strong>
+                    <p>The Lender entity manages book borrowing with these operations:</p>
+                    <ul>
+                        <li>GET /lenders: List all lenders</li>
+                        <li>GET /lenders/{id}: Get specific lender</li>
+                        <li>POST /lenders: Register new lender</li>
+                        <li>DELETE /lenders/{id}: Remove lender</li>
+                    </ul>
+                </div>
+
+                <div class="scenario">
+                    <h3>Scenario 3: Registering a New Lender</h3>
+                    <p>Adding a new library member to the system</p>
+                    
+                    <div class="example-flow">
+                        <div class="step">
+                            <p>API Endpoint: POST /lenders</p>
+                            <div class="code-output">
+                                // Request Body
+                                {
+                                    "name": "John Smith",
+                                    "email": "john.smith@example.com",
+                                    "membershipId": "LIB-2024-001"
+                                }
+
+                                // Response (200 OK)
+                                {
+                                    "id": 1,
+                                    "name": "John Smith",
+                                    "email": "john.smith@example.com",
+                                    "membershipId": "LIB-2024-001",
+                                    "status": "ACTIVE"
+                                }</div>
+                            <p>Implementation: LenderController.addLender() method</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="implementation-details">
+                <h2>Implementation Details</h2>
+
+                <div class="scenario">
+                    <h3>Controller Structure</h3>
+                    <div class="implementation-note">
+                        <p>The system uses Spring REST Controllers with these key features:</p>
+                        <ul>
+                            <li>@RestController annotation for REST endpoints</li>
+                            <li>Constructor injection for services</li>
+                            <li>Standard HTTP methods (GET, POST, PUT, DELETE)</li>
+                            <li>ResponseEntity for proper HTTP responses</li>
+                        </ul>
+                    </div>
+                    <div class="code-output">
+                        @RestController
+                        @RequestMapping("/books")
+                        public class BookController {
+                            private final BookService bookService;
+                            
+                            public BookController(BookService bookService) {
+                                this.bookService = bookService;
+                            }
+                            
+                            @GetMapping
+                            public ResponseEntity<List<BookResponseDTO>> getAllBooks() {
+                                return ResponseEntity.ok(bookService.getAllBooks());
+                            }
+                            // ... other endpoints
+                        }</div>
+                </div>
+
+                <div class="scenario">
+                    <h3>Entity Structure</h3>
+                    <div class="implementation-note">
+                        <p>Entities are mapped to database tables using JPA annotations:</p>
+                    </div>
+                    <div class="code-output">
+                        @Entity
+                        @Table(name = "books")
+                        public class Book implements Serializable {
+                            @Id
+                            @GeneratedValue(strategy = GenerationType.IDENTITY)
+                            private Long bookId;
+                            
+                            private String name;
+                            private String author;
+                            private String genre;
+                            private String language;
+                            // ... getters and setters
+                        }</div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html> 

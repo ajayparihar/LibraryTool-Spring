@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Schema - Library Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>Documentation</h2>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#er-diagram">ER Diagram</a></li>
+                <li><a href="#tables">Table Definitions</a></li>
+                <li><a href="#relationships">Relationships</a></li>
+                <li><a href="#indexes">Indexes</a></li>
+                <li><a href="#optimization">Optimization</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <!-- Version Selector -->
+            <div class="version-selector">
+                <select>
+                    <option>v1.0.0 (Latest)</option>
+                    <option>v0.9.0</option>
+                    <option>v0.8.0</option>
+                </select>
+            </div>
+
+            <!-- Search -->
+            <div class="search-container">
+                <input type="text" id="doc-search" placeholder="Search database documentation...">
+                <div class="search-results"></div>
+            </div>
+
+            <!-- Breadcrumbs -->
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a> > Database Schema
+            </div>
+
+            <h1>Database Schema</h1>
+
+            <div class="card" id="er-diagram">
+                <h2>Entity Relationship Diagram</h2>
+                <div class="interactive-diagram">
+                    <svg viewBox="0 0 800 600">
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5"
+                                markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#2c3e50"/>
+                            </marker>
+                        </defs>
+                        <g class="diagram-content">
+                            <!-- Book Table -->
+                            <g class="table" transform="translate(50,50)">
+                                <rect width="200" height="180" fill="#3498db" opacity="0.2" rx="5"/>
+                                <text x="100" y="30" text-anchor="middle" fill="#2c3e50" class="table-title">Book</text>
+                                <line x1="20" y1="40" x2="180" y2="40" stroke="#2c3e50"/>
+                                <text x="30" y="60" fill="#2c3e50">PK: id</text>
+                                <text x="30" y="85" fill="#2c3e50">title: varchar(255)</text>
+                                <text x="30" y="110" fill="#2c3e50">author: varchar(255)</text>
+                                <text x="30" y="135" fill="#2c3e50">isbn: varchar(13)</text>
+                                <text x="30" y="160" fill="#2c3e50">available: boolean</text>
+                            </g>
+
+                            <!-- Member Table -->
+                            <g class="table" transform="translate(550,50)">
+                                <rect width="200" height="180" fill="#e74c3c" opacity="0.2" rx="5"/>
+                                <text x="100" y="30" text-anchor="middle" fill="#2c3e50" class="table-title">Member</text>
+                                <line x1="20" y1="40" x2="180" y2="40" stroke="#2c3e50"/>
+                                <text x="30" y="60" fill="#2c3e50">PK: id</text>
+                                <text x="30" y="85" fill="#2c3e50">name: varchar(255)</text>
+                                <text x="30" y="110" fill="#2c3e50">email: varchar(255)</text>
+                                <text x="30" y="135" fill="#2c3e50">joined_date: date</text>
+                                <text x="30" y="160" fill="#2c3e50">status: enum</text>
+                            </g>
+
+                            <!-- Lending Table -->
+                            <g class="table" transform="translate(300,300)">
+                                <rect width="200" height="200" fill="#2ecc71" opacity="0.2" rx="5"/>
+                                <text x="100" y="30" text-anchor="middle" fill="#2c3e50" class="table-title">Lending</text>
+                                <line x1="20" y1="40" x2="180" y2="40" stroke="#2c3e50"/>
+                                <text x="30" y="60" fill="#2c3e50">PK: id</text>
+                                <text x="30" y="85" fill="#2c3e50">FK: book_id</text>
+                                <text x="30" y="110" fill="#2c3e50">FK: member_id</text>
+                                <text x="30" y="135" fill="#2c3e50">borrow_date: date</text>
+                                <text x="30" y="160" fill="#2c3e50">due_date: date</text>
+                                <text x="30" y="185" fill="#2c3e50">status: enum</text>
+                            </g>
+
+                            <!-- Relationships -->
+                            <path d="M250,125 L300,375" stroke="#2c3e50" fill="none" marker-end="url(#arrow)"/>
+                            <path d="M550,125 L500,375" stroke="#2c3e50" fill="none" marker-end="url(#arrow)"/>
+                            
+                            <!-- Relationship Labels -->
+                            <text x="260" y="250" fill="#2c3e50" transform="rotate(-45 260,250)">1:N</text>
+                            <text x="540" y="250" fill="#2c3e50" transform="rotate(45 540,250)">1:N</text>
+                        </g>
+                    </svg>
+                    <div class="diagram-controls">
+                        <button class="zoom-in" title="Zoom In">+</button>
+                        <button class="zoom-out" title="Zoom Out">-</button>
+                        <button class="center-btn" title="Center Diagram">⌂</button>
+                        <button class="reset" title="Reset View">↺</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="tables">
+                <h2>Table Definitions</h2>
+                
+                <h3>Book Table</h3>
+                <div class="code-example">
+                    <pre><code>CREATE TABLE book (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    isbn VARCHAR(13) UNIQUE NOT NULL,
+    available BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);</code></pre>
+                </div>
+
+                <h3>Member Table</h3>
+                <div class="code-example">
+                    <pre><code>CREATE TABLE member (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    joined_date DATE NOT NULL,
+    status ENUM('ACTIVE', 'SUSPENDED', 'EXPIRED') DEFAULT 'ACTIVE',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);</code></pre>
+                </div>
+
+                <h3>Lending Table</h3>
+                <div class="code-example">
+                    <pre><code>CREATE TABLE lending (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    book_id BIGINT NOT NULL,
+    member_id BIGINT NOT NULL,
+    borrow_date DATE NOT NULL,
+    due_date DATE NOT NULL,
+    return_date DATE,
+    status ENUM('BORROWED', 'RETURNED', 'OVERDUE') DEFAULT 'BORROWED',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (book_id) REFERENCES book(id),
+    FOREIGN KEY (member_id) REFERENCES member(id)
+);</code></pre>
+                </div>
+            </div>
+
+            <div class="card" id="relationships">
+                <h2>Table Relationships</h2>
+                <ul>
+                    <li><strong>Book to Lending</strong>: One-to-Many
+                        <ul>
+                            <li>A book can be involved in multiple lending transactions</li>
+                            <li>Each lending transaction involves exactly one book</li>
+                        </ul>
+                    </li>
+                    <li><strong>Member to Lending</strong>: One-to-Many
+                        <ul>
+                            <li>A member can have multiple lending transactions</li>
+                            <li>Each lending transaction involves exactly one member</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card" id="indexes">
+                <h2>Database Indexes</h2>
+                <div class="code-example">
+                    <pre><code>-- Book table indexes
+CREATE INDEX idx_book_title ON book(title);
+CREATE INDEX idx_book_author ON book(author);
+CREATE UNIQUE INDEX idx_book_isbn ON book(isbn);
+
+-- Member table indexes
+CREATE UNIQUE INDEX idx_member_email ON member(email);
+CREATE INDEX idx_member_status ON member(status);
+
+-- Lending table indexes
+CREATE INDEX idx_lending_book ON lending(book_id);
+CREATE INDEX idx_lending_member ON lending(member_id);
+CREATE INDEX idx_lending_status ON lending(status);
+CREATE INDEX idx_lending_due_date ON lending(due_date);</code></pre>
+                </div>
+            </div>
+
+            <div class="card" id="optimization">
+                <h2>Performance Optimization</h2>
+                <h3>Query Optimization Tips</h3>
+                <ul>
+                    <li>Use appropriate indexes for frequently queried columns</li>
+                    <li>Avoid SELECT * and only select needed columns</li>
+                    <li>Use EXPLAIN to analyze query performance</li>
+                    <li>Consider partitioning for large tables</li>
+                </ul>
+
+                <h3>Example EXPLAIN Output</h3>
+                <div class="code-example">
+                    <pre><code>EXPLAIN SELECT l.*, b.title, m.name 
+FROM lending l
+JOIN book b ON l.book_id = b.id
+JOIN member m ON l.member_id = m.id
+WHERE l.status = 'BORROWED';</code></pre>
+                </div>
+            </div>
+
+            <!-- Add theme toggle button -->
+            <button class="theme-toggle">🌓</button>
+        </main>
+    </div>
+</body>
+</html> 

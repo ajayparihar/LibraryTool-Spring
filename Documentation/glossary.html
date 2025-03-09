@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glossary - Library Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .term {
+            border-bottom: 1px solid #e1e1e1;
+            padding: 1rem 0;
+        }
+        
+        .term:last-child {
+            border-bottom: none;
+        }
+        
+        .term h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .category-label {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+            background: var(--secondary-color);
+            color: white;
+        }
+        
+        .see-also {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>Documentation</h2>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#general-terms">General Terms</a></li>
+                <li><a href="#spring-terms">Spring Framework</a></li>
+                <li><a href="#database-terms">Database Terms</a></li>
+                <li><a href="#security-terms">Security Terms</a></li>
+                <li><a href="#web-terms">Web Development</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <h1>Technical Glossary</h1>
+            
+            <div class="card" id="general-terms">
+                <h2>General Programming Terms</h2>
+                
+                <div class="term">
+                    <h3>API <span class="category-label">General</span></h3>
+                    <p>Application Programming Interface. A set of rules and protocols that allows different software applications to communicate with each other. Think of it as a menu in a restaurant - it defines what you can order (request) and what you'll get in return.</p>
+                </div>
+
+                <div class="term">
+                    <h3>Framework <span class="category-label">General</span></h3>
+                    <p>A pre-written collection of standardized code and tools that provides a foundation for developing software applications. Like a blueprint for building a house - it gives you the basic structure and tools to build upon.</p>
+                </div>
+
+                <div class="term">
+                    <h3>JSON <span class="category-label">General</span></h3>
+                    <p>JavaScript Object Notation. A lightweight data format that's easy for humans to read and write and easy for machines to parse and generate. It's like writing a shopping list in a structured way that both humans and computers can understand.</p>
+                </div>
+            </div>
+
+            <div class="card" id="spring-terms">
+                <h2>Spring Framework Terms</h2>
+
+                <div class="term">
+                    <h3>Spring Boot <span class="category-label">Spring</span></h3>
+                    <p>An extension of the Spring Framework that simplifies the process of building production-ready applications. It provides defaults for code and annotation configuration to quickly get a Spring application up and running.</p>
+                    <div class="see-also">See also: Framework, Dependency Injection</div>
+                </div>
+
+                <div class="term">
+                    <h3>Dependency Injection <span class="category-label">Spring</span></h3>
+                    <p>A design pattern where objects receive other objects that they depend on. Instead of creating an object inside a class, the object is created outside and "injected" into the class. It's like having a car factory that receives pre-made engines instead of building them from scratch.</p>
+                </div>
+
+                <div class="term">
+                    <h3>Bean <span class="category-label">Spring</span></h3>
+                    <p>Objects that form the backbone of your application and are managed by the Spring IoC container. These are like the building blocks of your application that Spring takes care of creating and managing.</p>
+                </div>
+            </div>
+
+            <div class="card" id="database-terms">
+                <h2>Database Terms</h2>
+
+                <div class="term">
+                    <h3>JPA <span class="category-label">Database</span></h3>
+                    <p>Java Persistence API. A specification for managing relational data in Java applications. It acts as a bridge between Java objects and database tables, making it easier to store and retrieve data.</p>
+                    <div class="see-also">See also: ORM, Entity</div>
+                </div>
+
+                <div class="term">
+                    <h3>ORM <span class="category-label">Database</span></h3>
+                    <p>Object-Relational Mapping. A programming technique that lets you manipulate database data using object-oriented programming concepts. It's like having a translator that converts between your Java code and database operations.</p>
+                </div>
+
+                <div class="term">
+                    <h3>Entity <span class="category-label">Database</span></h3>
+                    <p>A Java class that represents a table in your database. Each instance of the class represents a row in the table. Think of it as a digital form that matches the structure of your database table.</p>
+                </div>
+            </div>
+
+            <div class="card" id="security-terms">
+                <h2>Security Terms</h2>
+
+                <div class="term">
+                    <h3>Authentication <span class="category-label">Security</span></h3>
+                    <p>The process of verifying who someone is. Like checking an ID card at the entrance of a building to confirm someone's identity.</p>
+                </div>
+
+                <div class="term">
+                    <h3>Authorization <span class="category-label">Security</span></h3>
+                    <p>The process of determining what someone is allowed to do after they've been authenticated. Like checking what areas of a building someone has permission to enter after confirming their ID.</p>
+                </div>
+
+                <div class="term">
+                    <h3>JWT <span class="category-label">Security</span></h3>
+                    <p>JSON Web Token. A compact, URL-safe means of representing claims between two parties. Like a digital passport that proves who you are and what you're allowed to do.</p>
+                </div>
+            </div>
+
+            <div class="card" id="web-terms">
+                <h2>Web Development Terms</h2>
+
+                <div class="term">
+                    <h3>REST <span class="category-label">Web</span></h3>
+                    <p>Representational State Transfer. An architectural style for designing networked applications. It's like a set of rules for how web services should work together, similar to traffic rules for cars on a road.</p>
+                </div>
+
+                <div class="term">
+                    <h3>HTTP Methods <span class="category-label">Web</span></h3>
+                    <p>Standard operations that can be performed on web resources:</p>
+                    <ul>
+                        <li><strong>GET</strong>: Retrieve data (like reading a book)</li>
+                        <li><strong>POST</strong>: Create new data (like adding a new book)</li>
+                        <li><strong>PUT</strong>: Update existing data (like updating book details)</li>
+                        <li><strong>DELETE</strong>: Remove data (like removing a book)</li>
+                    </ul>
+                </div>
+
+                <div class="term">
+                    <h3>Thymeleaf <span class="category-label">Web</span></h3>
+                    <p>A modern server-side Java template engine for web applications. It allows you to create dynamic HTML pages by inserting data from your Java code. Like a smart word processor that can automatically fill in information in a document template.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html> 

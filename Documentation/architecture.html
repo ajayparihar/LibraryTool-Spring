@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture - Library Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>Documentation</h2>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#overview">Architecture Overview</a></li>
+                <li><a href="#layers">Application Layers</a></li>
+                <li><a href="#components">Key Components</a></li>
+                <li><a href="#data-flow">Data Flow</a></li>
+                <li><a href="#security-architecture">Security Architecture</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <h1>System Architecture</h1>
+
+            <div class="card" id="overview">
+                <h2>Architecture Overview</h2>
+                <div class="tech-explanation">
+                    <p>The Library Management System follows a layered architecture pattern, which is a common approach in Spring Boot applications. Think of it as a multi-story building where each floor has a specific purpose and communicates with the floors above and below it.</p>
+
+                    <div class="architecture-diagram">
+                        <pre>
+┌─────────────────────────────────┐
+│           Presentation          │
+│  (Controllers & Thymeleaf Views)│
+├─────────────────────────────────┤
+│         Business Logic          │
+│         (Service Layer)         │
+├─────────────────────────────────┤
+│            Data Access          │
+│     (Repositories & Entities)   │
+├─────────────────────────────────┤
+│          MySQL Database         │
+└─────────────────────────────────┘
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="layers">
+                <h2>Application Layers</h2>
+                <div class="tech-explanation">
+                    <h3>1. Presentation Layer</h3>
+                    <p>This is like the front desk of a library where users interact with the system. It includes:</p>
+                    <ul>
+                        <li><strong>Controllers</strong>: Handle user requests and responses</li>
+                        <li><strong>Views</strong>: The web pages users see and interact with</li>
+                        <li><strong>DTOs</strong>: Data Transfer Objects that carry data between processes</li>
+                    </ul>
+
+                    <div class="code-example">
+                        <h4>Example Controller:</h4>
+                        <pre><code>
+@Controller
+@RequestMapping("/books")
+public class BookController {
+    @GetMapping
+    public String listBooks(Model model) {
+        // Handle request and return view
+    }
+}
+                        </code></pre>
+                    </div>
+
+                    <h3>2. Business Logic Layer</h3>
+                    <p>This is like the librarian who knows all the rules and procedures. It contains:</p>
+                    <ul>
+                        <li><strong>Services</strong>: Classes that implement business logic and rules</li>
+                        <li><strong>Validation</strong>: Ensures data meets business requirements</li>
+                        <li><strong>Exception Handling</strong>: Manages errors and special cases</li>
+                    </ul>
+
+                    <h3>3. Data Access Layer</h3>
+                    <p>This is like the library's catalog system and storage room. It includes:</p>
+                    <ul>
+                        <li><strong>Repositories</strong>: Interfaces for database operations</li>
+                        <li><strong>Entities</strong>: Java classes that map to database tables</li>
+                        <li><strong>Data Mapping</strong>: Converts between Java objects and database records</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card" id="components">
+                <h2>Key Components</h2>
+                <div class="tech-explanation">
+                    <h3>Core Components</h3>
+                    <ul>
+                        <li><strong>Book Management</strong>: Handles book inventory and details</li>
+                        <li><strong>Member Management</strong>: Manages library member information</li>
+                        <li><strong>Lending System</strong>: Handles book borrowing and returns</li>
+                        <li><strong>Authentication</strong>: Manages user login and security</li>
+                    </ul>
+
+                    <div class="component-diagram">
+                        <pre>
+┌─────────────┐    ┌─────────────┐
+│    Book     │    │   Member    │
+│  Management │    │ Management  │
+└──────┬──────┘    └──────┬──────┘
+       │                  │
+       │    ┌────────────┘
+       │    │
+┌──────┴────┴───┐    ┌─────────────┐
+│    Lending    │    │    Auth      │
+│    System     │────│   System     │
+└──────────────┘    └─────────────┘
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="data-flow">
+                <h2>Data Flow</h2>
+                <div class="tech-explanation">
+                    <h3>Request Flow</h3>
+                    <p>When a user interacts with the system, here's what happens:</p>
+                    <ol>
+                        <li>User sends request (e.g., searching for a book)</li>
+                        <li>Controller receives the request</li>
+                        <li>Service layer processes the request</li>
+                        <li>Repository fetches/updates data in database</li>
+                        <li>Response flows back through the layers</li>
+                        <li>View is rendered with the results</li>
+                    </ol>
+
+                    <div class="flow-diagram">
+                        <pre>
+User Request → Controller → Service → Repository → Database
+     ↑           ↑           ↑          ↑            ↓
+Response   ←   View    ←   DTO    ←    Entity    ←  Data
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="security-architecture">
+                <h2>Security Architecture</h2>
+                <div class="tech-explanation">
+                    <h3>Security Layers</h3>
+                    <ul>
+                        <li><strong>Authentication</strong>: Verifies user identity</li>
+                        <li><strong>Authorization</strong>: Controls access to resources</li>
+                        <li><strong>Session Management</strong>: Handles user sessions</li>
+                        <li><strong>Password Security</strong>: Secures user credentials</li>
+                    </ul>
+
+                    <div class="security-diagram">
+                        <pre>
+┌─────────────────┐
+│    Request      │
+└────────┬────────┘
+         ↓
+┌────────┴────────┐
+│  Authentication │
+└────────┬────────┘
+         ↓
+┌────────┴────────┐
+│  Authorization  │
+└────────┬────────┘
+         ↓
+┌────────┴────────┐
+│   Application   │
+└─────────────────┘
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html> 

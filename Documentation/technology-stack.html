@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology Stack - Library Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>Documentation</h2>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#spring-boot">Spring Boot</a></li>
+                <li><a href="#spring-data-jpa">Spring Data JPA</a></li>
+                <li><a href="#mysql">MySQL Database</a></li>
+                <li><a href="#maven">Maven</a></li>
+                <li><a href="#security">Spring Security</a></li>
+                <li><a href="#thymeleaf">Thymeleaf</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <h1>Technology Stack Explained</h1>
+
+            <div class="card" id="spring-boot">
+                <h2>Spring Boot</h2>
+                <div class="tech-explanation">
+                    <h3>What is Spring Boot?</h3>
+                    <p>Spring Boot is a framework that makes it easy to create stand-alone, production-grade Spring-based Applications. Think of it as a pre-configured kitchen where all the tools and ingredients are already set up for you to start cooking immediately.</p>
+
+                    <h3>Key Concepts for Beginners</h3>
+                    <ul>
+                        <li><strong>Framework</strong>: A pre-written code structure that helps you build applications faster</li>
+                        <li><strong>Dependency Injection</strong>: A way to make different parts of your application work together without them being tightly coupled</li>
+                        <li><strong>Annotations</strong>: Special markers in your code that tell Spring Boot how to handle different components</li>
+                    </ul>
+
+                    <div class="code-example">
+                        <h4>Example of a Simple Spring Boot Application:</h4>
+                        <pre><code>
+@SpringBootApplication
+public class LibraryApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(LibraryApplication.class, args);
+    }
+}
+                        </code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="spring-data-jpa">
+                <h2>Spring Data JPA</h2>
+                <div class="tech-explanation">
+                    <h3>What is JPA?</h3>
+                    <p>Java Persistence API (JPA) is a way to automatically save and retrieve data between your Java objects and database tables. It's like having a magical translator between your Java code and your database.</p>
+
+                    <h3>Key Concepts</h3>
+                    <ul>
+                        <li><strong>Entity</strong>: A Java class that represents a table in your database</li>
+                        <li><strong>Repository</strong>: An interface that provides methods to work with your database</li>
+                        <li><strong>ORM</strong>: Object-Relational Mapping - the process of converting Java objects to database records and vice versa</li>
+                    </ul>
+
+                    <div class="code-example">
+                        <h4>Example of an Entity:</h4>
+                        <pre><code>
+@Entity
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String title;
+    private String author;
+}
+                        </code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="mysql">
+                <h2>MySQL Database</h2>
+                <div class="tech-explanation">
+                    <h3>What is MySQL?</h3>
+                    <p>MySQL is a popular open-source database system. Think of it as a digital filing cabinet where all your application's data is stored in an organized manner.</p>
+
+                    <h3>Basic Database Concepts</h3>
+                    <ul>
+                        <li><strong>Table</strong>: A collection of related data organized in rows and columns</li>
+                        <li><strong>Primary Key</strong>: A unique identifier for each record in a table</li>
+                        <li><strong>Foreign Key</strong>: A field that links two tables together</li>
+                        <li><strong>CRUD Operations</strong>: Create, Read, Update, Delete - the basic operations you can perform on data</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card" id="maven">
+                <h2>Maven</h2>
+                <div class="tech-explanation">
+                    <h3>What is Maven?</h3>
+                    <p>Maven is a build automation and project management tool. Think of it as a recipe book that tells your computer how to cook (build) your application and what ingredients (dependencies) it needs.</p>
+
+                    <h3>Key Concepts</h3>
+                    <ul>
+                        <li><strong>POM</strong>: Project Object Model - the XML file that describes your project</li>
+                        <li><strong>Dependencies</strong>: External libraries your project needs</li>
+                        <li><strong>Build Lifecycle</strong>: The steps Maven follows to build your project</li>
+                    </ul>
+
+                    <div class="code-example">
+                        <h4>Example of a pom.xml:</h4>
+                        <pre><code>
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+                        </code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="security">
+                <h2>Spring Security</h2>
+                <div class="tech-explanation">
+                    <h3>What is Spring Security?</h3>
+                    <p>Spring Security is a powerful framework for adding authentication and authorization to your application. Think of it as a security guard that checks IDs and permissions before letting users access different parts of your application.</p>
+
+                    <h3>Key Security Concepts</h3>
+                    <ul>
+                        <li><strong>Authentication</strong>: Verifying who a user is</li>
+                        <li><strong>Authorization</strong>: Determining what a user is allowed to do</li>
+                        <li><strong>Password Encoding</strong>: Securing passwords by converting them into unreadable format</li>
+                        <li><strong>Role-based Access</strong>: Giving different permissions to different types of users</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card" id="thymeleaf">
+                <h2>Thymeleaf</h2>
+                <div class="tech-explanation">
+                    <h3>What is Thymeleaf?</h3>
+                    <p>Thymeleaf is a template engine for Spring Boot that helps create dynamic HTML pages. Think of it as a smart word processor that can automatically fill in information from your Java code into your web pages.</p>
+
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Natural Templates</strong>: HTML files that work both as static prototypes and dynamic views</li>
+                        <li><strong>Expression Language</strong>: Special syntax to insert dynamic content</li>
+                        <li><strong>Layout Dialects</strong>: Ways to reuse common page elements</li>
+                    </ul>
+
+                    <div class="code-example">
+                        <h4>Example of Thymeleaf syntax:</h4>
+                        <pre><code>
+&lt;div th:text="${book.title}"&gt;Book Title&lt;/div&gt;
+                        </code></pre>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --text-color: #333;
+            --background-color: #f5f6fa;
+            --sidebar-width: 250px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 1rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            margin-bottom: 1rem;
+        }
+
+        code {
+            background: #f1f2f6;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 1rem;
+            border-left: 4px solid #ffc107;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>Documentation</h2>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="setup-guide.html">Setup Guide</a></li>
+                <li><a href="technology-stack.html">Technology Stack</a></li>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="database-schema.html">Database Schema</a></li>
+                <li><a href="api-reference.html">API Reference</a></li>
+                <li><a href="examples.html">Real-Life Examples</a></li>
+                <li><a href="glossary.html">Glossary</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <h1>Library Management System Documentation</h1>
+            
+            <div class="card" id="introduction">
+                <h2>Introduction</h2>
+                <p>Welcome to the comprehensive documentation for the Library Management System. This documentation is designed to take you from a complete beginner to a proficient user and developer of the system.</p>
+                <p>The Library Management System is a modern, web-based application built using Spring Boot that helps libraries manage their books, members, and lending processes efficiently.</p>
+                
+                <div class="highlight">
+                    <strong>Who is this documentation for?</strong>
+                    <p>This documentation is written for everyone - from complete beginners to experienced developers. We'll explain every concept from the ground up, ensuring you understand not just how to use the system, but why things work the way they do.</p>
+                </div>
+            </div>
+
+            <div class="card" id="getting-started">
+                <h2>Quick Start</h2>
+                <p>Want to get started quickly? Follow these steps:</p>
+                <ol>
+                    <li>Check the <a href="setup-guide.html">Setup Guide</a> for installation instructions</li>
+                    <li>Review the <a href="technology-stack.html">Technology Stack</a> to understand the tools used</li>
+                    <li>Explore the <a href="architecture.html">Architecture</a> to learn how the system works</li>
+                    <li>See <a href="examples.html">Real-Life Examples</a> to understand common scenarios</li>
+                    <li>Use the <a href="api-reference.html">API Reference</a> to integrate with the system</li>
+                </ol>
+                <p>New to some of the terms? Check out our <a href="glossary.html">Glossary</a> for simple explanations.</p>
+            </div>
+
+            <div class="card" id="documentation-structure">
+                <h2>Documentation Structure</h2>
+                <p>Our documentation is organized into several sections to help you find what you need:</p>
+                <ul>
+                    <li><strong><a href="setup-guide.html">Setup Guide</a></strong>
+                        <ul>
+                            <li>Step-by-step installation instructions</li>
+                            <li>Configuration guidelines</li>
+                            <li>Troubleshooting common issues</li>
+                        </ul>
+                    </li>
+                    <li><strong><a href="technology-stack.html">Technology Stack</a></strong>
+                        <ul>
+                            <li>Detailed explanation of all technologies used</li>
+                            <li>How different components work together</li>
+                            <li>Best practices and patterns</li>
+                        </ul>
+                    </li>
+                    <li><strong><a href="architecture.html">Architecture</a></strong>
+                        <ul>
+                            <li>System design and components</li>
+                            <li>Data flow and processing</li>
+                            <li>Security architecture</li>
+                        </ul>
+                    </li>
+                    <li><strong><a href="database-schema.html">Database Schema</a></strong>
+                        <ul>
+                            <li>Complete database structure</li>
+                            <li>Table relationships</li>
+                            <li>Data integrity rules</li>
+                        </ul>
+                    </li>
+                    <li><strong><a href="examples.html">Real-Life Examples</a></strong>
+                        <ul>
+                            <li>Common library operations</li>
+                            <li>Step-by-step scenarios</li>
+                            <li>Error handling examples</li>
+                            <li>API usage demonstrations</li>
+                        </ul>
+                    </li>
+                    <li><strong><a href="api-reference.html">API Reference</a></strong>
+                        <ul>
+                            <li>Detailed API documentation</li>
+                            <li>Request/response examples</li>
+                            <li>Authentication and authorization</li>
+                        </ul>
+                    </li>
+                    <li><strong><a href="glossary.html">Glossary</a></strong>
+                        <ul>
+                            <li>Technical terms explained simply</li>
+                            <li>Common concepts and patterns</li>
+                            <li>Cross-references to detailed documentation</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card" id="support">
+                <h2>Need Help?</h2>
+                <p>If you can't find what you're looking for:</p>
+                <ul>
+                    <li>Use the navigation menu on the left to browse topics</li>
+                    <li>Check the Glossary for unfamiliar terms</li>
+                    <li>Review the Troubleshooting section in the Setup Guide</li>
+                    <li>Look at code examples in the API Reference</li>
+                    <li>See real-world scenarios in the Examples section</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+</html> 

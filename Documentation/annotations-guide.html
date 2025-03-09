@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annotations Guide - Library Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js"></script>
+    <style>
+        .annotation-category {
+            border-left: 4px solid var(--secondary-color);
+            margin-bottom: 2rem;
+            padding-left: 1rem;
+        }
+
+        .annotation-example {
+            background: var(--code-background);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .annotation-flow {
+            width: 100%;
+            height: 300px;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .troubleshooting-tree {
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .best-practice {
+            background-color: #e8f5e9;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .warning {
+            background-color: #fff3cd;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .interactive-demo {
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            margin-right: 0.5rem;
+        }
+
+        .tab.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .tab-content {
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 0 4px 4px 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>Documentation</h2>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#spring">Spring Annotations</a></li>
+                <li><a href="#jpa">JPA Annotations</a></li>
+                <li><a href="#validation">Validation Annotations</a></li>
+                <li><a href="#lombok">Lombok Annotations</a></li>
+                <li><a href="#documentation">Documentation Annotations</a></li>
+                <li><a href="#custom">Custom Annotations</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <!-- Version Selector -->
+            <div class="version-selector">
+                <select>
+                    <option>v1.0.0 (Latest)</option>
+                    <option>v0.9.0</option>
+                    <option>v0.8.0</option>
+                </select>
+            </div>
+
+            <!-- Search -->
+            <div class="search-container">
+                <input type="text" id="doc-search" placeholder="Search annotations documentation...">
+                <div class="search-results"></div>
+            </div>
+
+            <!-- Breadcrumbs -->
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a> > Annotations Guide
+            </div>
+
+            <h1>Annotations Guide</h1>
+
+            <div class="card" id="introduction">
+                <h2>Introduction to Annotations</h2>
+                <p>Annotations are metadata that provide additional information about your code. They are like sticky notes that tell Spring and other frameworks how to handle your classes, methods, and fields.</p>
+                
+                <div class="annotation-flow">
+                    <svg viewBox="0 0 800 200">
+                        <g transform="translate(50,50)">
+                            <rect width="150" height="60" fill="#3498db" opacity="0.2"/>
+                            <text x="75" y="35" text-anchor="middle">Source Code</text>
+                        </g>
+                        <g transform="translate(300,50)">
+                            <rect width="150" height="60" fill="#e74c3c" opacity="0.2"/>
+                            <text x="75" y="35" text-anchor="middle">Annotations</text>
+                        </g>
+                        <g transform="translate(550,50)">
+                            <rect width="150" height="60" fill="#2ecc71" opacity="0.2"/>
+                            <text x="75" y="35" text-anchor="middle">Framework</text>
+                        </g>
+                        <path d="M200,80 L300,80" stroke="#2c3e50" fill="none" marker-end="url(#arrow)"/>
+                        <path d="M450,80 L550,80" stroke="#2c3e50" fill="none" marker-end="url(#arrow)"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="card" id="spring">
+                <h2>Spring Framework Annotations</h2>
+                
+                <div class="annotation-category">
+                    <h3>Component Annotations</h3>
+                    <div class="tabs">
+                        <div class="tab active">Basic Usage</div>
+                        <div class="tab">Advanced</div>
+                        <div class="tab">Examples</div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="annotation-example">
+                            <pre><code>@Component
+public class EmailService {
+    // Basic component
+}
+
+@Service
+public class BookService {
+    // Service component with business logic
+}
+
+@Repository
+public class BookRepository {
+    // Data access component
+}
+
+@Controller
+public class BookController {
+    // Web controller component
+}</code></pre>
+                        </div>
+
+                        <div class="best-practice">
+                            <strong>Best Practice:</strong>
+                            <ul>
+                                <li>Use @Service for business logic</li>
+                                <li>Use @Repository for data access</li>
+                                <li>Use @Controller/@RestController for web endpoints</li>
+                                <li>Use @Component for general components</li>
+                            </ul>
+                        </div>
+
+                        <div class="warning">
+                            <strong>Common Pitfalls:</strong>
+                            <ul>
+                                <li>Don't mix @Controller and @RestController</li>
+                                <li>Don't use @Component when a more specific annotation exists</li>
+                                <li>Ensure components are in the correct scan path</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="annotation-category">
+                    <h3>Dependency Injection</h3>
+                    <div class="annotation-example">
+                        <pre><code>@Service
+public class BookService {
+    private final BookRepository bookRepository;
+    
+    @Autowired // Constructor injection (preferred)
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+    
+    @Autowired // Field injection (not recommended)
+    private AuthorService authorService;
+    
+    @Autowired // Setter injection
+    public void setPublisherService(PublisherService publisherService) {
+        this.publisherService = publisherService;
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="best-practice">
+                        <strong>Best Practice:</strong>
+                        <ul>
+                            <li>Prefer constructor injection over field injection</li>
+                            <li>Use final fields with constructor injection</li>
+                            <li>Consider making @Autowired optional for non-required dependencies</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="jpa">
+                <h2>JPA Annotations</h2>
+                
+                <div class="annotation-category">
+                    <h3>Entity Mapping</h3>
+                    <div class="annotation-example">
+                        <pre><code>@Entity
+@Table(name = "books")
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(name = "title", nullable = false)
+    private String title;
+    
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
+    
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Review> reviews;
+}</code></pre>
+                    </div>
+
+                    <div class="interactive-demo">
+                        <h4>Entity Relationship Visualization</h4>
+                        <div class="annotation-flow">
+                            <svg viewBox="0 0 800 200">
+                                <!-- Entity relationship diagram -->
+                                <g transform="translate(50,50)">
+                                    <rect width="200" height="100" fill="#3498db" opacity="0.2"/>
+                                    <text x="100" y="30" text-anchor="middle">Book</text>
+                                    <line x1="0" y1="40" x2="200" y2="40" stroke="#2c3e50"/>
+                                    <text x="10" y="60">id: Long</text>
+                                    <text x="10" y="80">title: String</text>
+                                </g>
+                                <g transform="translate(550,50)">
+                                    <rect width="200" height="100" fill="#e74c3c" opacity="0.2"/>
+                                    <text x="100" y="30" text-anchor="middle">Author</text>
+                                    <line x1="0" y1="40" x2="200" y2="40" stroke="#2c3e50"/>
+                                    <text x="10" y="60">id: Long</text>
+                                    <text x="10" y="80">name: String</text>
+                                </g>
+                                <path d="M250,100 L550,100" stroke="#2c3e50" fill="none"/>
+                                <text x="400" y="80" text-anchor="middle">@ManyToOne</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="validation">
+                <h2>Validation Annotations</h2>
+                
+                <div class="annotation-category">
+                    <h3>Common Validations</h3>
+                    <div class="annotation-example">
+                        <pre><code>public class BookDTO {
+    @NotNull(message = "Title is required")
+    @Size(min = 1, max = 100)
+    private String title;
+    
+    @NotBlank(message = "Author name is required")
+    private String author;
+    
+    @Pattern(regexp = "^\\d{13}$", message = "ISBN must be 13 digits")
+    private String isbn;
+    
+    @Min(0)
+    @Max(1000)
+    private Integer copies;
+    
+    @Email(message = "Invalid email format")
+    private String contactEmail;
+}</code></pre>
+                    </div>
+
+                    <div class="best-practice">
+                        <strong>Validation Best Practices:</strong>
+                        <ul>
+                            <li>Always provide meaningful validation messages</li>
+                            <li>Use appropriate validation constraints</li>
+                            <li>Consider creating custom validation annotations for complex rules</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="lombok">
+                <h2>Lombok Annotations</h2>
+                
+                <div class="annotation-category">
+                    <h3>Code Generation</h3>
+                    <div class="tabs">
+                        <div class="tab active">Basic</div>
+                        <div class="tab">Advanced</div>
+                        <div class="tab">Generated Code</div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="annotation-example">
+                            <pre><code>@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Book {
+    private Long id;
+    private String title;
+    private String author;
+    
+    @Getter(lazy = true)
+    private final String summary = calculateSummary();
+    
+    @Slf4j
+    private static final Logger log = LoggerFactory.getLogger(Book.class);
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="custom">
+                <h2>Custom Annotations</h2>
+                
+                <div class="annotation-category">
+                    <h3>Creating Custom Annotations</h3>
+                    <div class="annotation-example">
+                        <pre><code>@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface AuditLog {
+    String action() default "";
+    boolean printArgs() default false;
+}
+
+// Usage example
+@Service
+public class BookService {
+    @AuditLog(action = "create_book", printArgs = true)
+    public Book createBook(BookDTO dto) {
+        // Method implementation
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="troubleshooting">
+                <h2>Troubleshooting Guide</h2>
+                
+                <div class="troubleshooting-tree">
+                    <h3>Common Issues</h3>
+                    <ul>
+                        <li>Component not found
+                            <ul>
+                                <li>Check component scanning configuration</li>
+                                <li>Verify annotation is present</li>
+                                <li>Check package structure</li>
+                            </ul>
+                        </li>
+                        <li>Circular dependency
+                            <ul>
+                                <li>Use constructor injection</li>
+                                <li>Redesign component relationships</li>
+                                <li>Consider using @Lazy</li>
+                            </ul>
+                        </li>
+                        <li>Validation not working
+                            <ul>
+                                <li>Add @Valid annotation</li>
+                                <li>Enable validation in configuration</li>
+                                <li>Check constraint annotations</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="best-practice">
+                    <h3>Debugging Tips</h3>
+                    <ul>
+                        <li>Enable debug logging for Spring framework</li>
+                        <li>Use Spring Boot Actuator for runtime information</li>
+                        <li>Check component scanning with @ComponentScan</li>
+                        <li>Verify annotation processor is enabled for Lombok</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Add theme toggle button -->
+            <button class="theme-toggle">🌓</button>
+        </main>
+    </div>
+</body>
+</html> 

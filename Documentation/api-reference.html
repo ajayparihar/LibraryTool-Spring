@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference - Library Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js"></script>
+    <style>
+        .endpoint {
+            border-left: 4px solid var(--secondary-color);
+            margin-bottom: 2rem;
+            padding-left: 1rem;
+        }
+        
+        .http-method {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .get { background: #61affe; color: white; }
+        .post { background: #49cc90; color: white; }
+        .put { background: #fca130; color: white; }
+        .delete { background: #f93e3e; color: white; }
+        
+        .endpoint-url {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+        }
+        
+        .response-example {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>Documentation</h2>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#book-api">Book API</a></li>
+                <li><a href="#member-api">Member API</a></li>
+                <li><a href="#lending-api">Lending API</a></li>
+                <li><a href="#auth-api">Authentication API</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <!-- Version Selector -->
+            <div class="version-selector">
+                <select>
+                    <option>v1.0.0 (Latest)</option>
+                    <option>v0.9.0</option>
+                    <option>v0.8.0</option>
+                </select>
+            </div>
+
+            <!-- Search -->
+            <div class="search-container">
+                <input type="text" id="doc-search" placeholder="Search API documentation...">
+                <div class="search-results"></div>
+            </div>
+
+            <!-- Breadcrumbs -->
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a> > API Reference
+            </div>
+
+            <h1>API Reference</h1>
+
+            <div class="card" id="book-api">
+                <h2>Book Management API</h2>
+                <div class="tech-explanation">
+                    <p>The Book API provides endpoints for managing the library's book inventory. All endpoints require authentication unless specified otherwise.</p>
+
+                    <div class="endpoint">
+                        <h3>List All Books</h3>
+                        <span class="http-method get">GET</span>
+                        <span class="endpoint-url">/api/books</span>
+                        
+                        <h4>Query Parameters</h4>
+                        <ul>
+                            <li><code>page</code> (optional): Page number (default: 0)</li>
+                            <li><code>size</code> (optional): Items per page (default: 20)</li>
+                            <li><code>sort</code> (optional): Sort field (e.g., title,author)</li>
+                        </ul>
+
+                        <div class="endpoint-testing">
+                            <button class="try-it-out">Try it out</button>
+                            <div class="request-builder">
+                                <input type="number" placeholder="Page number">
+                                <input type="number" placeholder="Page size">
+                                <input type="text" placeholder="Sort field">
+                                <button class="send-request">Send Request</button>
+                            </div>
+                            <div class="response-viewer">
+                                <pre><code class="json">// Response will appear here</code></pre>
+                            </div>
+                        </div>
+
+                        <h4>Response Example</h4>
+                        <div class="code-example">
+                            <pre><code>{
+    "content": [
+        {
+            "id": 1,
+            "title": "Spring Boot in Action",
+            "author": "Craig Walls",
+            "isbn": "978-1617292545",
+            "available": true
+        }
+    ],
+    "totalPages": 1,
+    "totalElements": 1
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="endpoint">
+                        <h3>Get Book Details</h3>
+                        <span class="http-method get">GET</span>
+                        <span class="endpoint-url">/api/books/{id}</span>
+
+                        <h4>Path Parameters</h4>
+                        <ul>
+                            <li><code>id</code>: Book ID</li>
+                        </ul>
+
+                        <h4>Response Example</h4>
+                        <pre class="response-example">
+{
+    "id": 1,
+    "title": "Spring Boot in Action",
+    "author": "Craig Walls",
+    "isbn": "978-1617292545",
+    "publisher": "Manning",
+    "yearPublished": 2016,
+    "available": true,
+    "totalCopies": 3,
+    "availableCopies": 2
+}</pre>
+                    </div>
+
+                    <div class="endpoint">
+                        <h3>Add New Book</h3>
+                        <span class="http-method post">POST</span>
+                        <span class="endpoint-url">/api/books</span>
+
+                        <h4>Request Body</h4>
+                        <pre class="response-example">
+{
+    "title": "Spring Boot in Action",
+    "author": "Craig Walls",
+    "isbn": "978-1617292545",
+    "publisher": "Manning",
+    "yearPublished": 2016,
+    "totalCopies": 3
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="member-api">
+                <h2>Member Management API</h2>
+                <div class="tech-explanation">
+                    <p>The Member API handles library member information and operations. Administrative access is required for most endpoints.</p>
+
+                    <div class="endpoint">
+                        <h3>Register New Member</h3>
+                        <span class="http-method post">POST</span>
+                        <span class="endpoint-url">/api/members</span>
+
+                        <h4>Request Body</h4>
+                        <pre class="response-example">
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "address": "123 Library St",
+    "phoneNumber": "555-0123"
+}</pre>
+                    </div>
+
+                    <div class="endpoint">
+                        <h3>Get Member Details</h3>
+                        <span class="http-method get">GET</span>
+                        <span class="endpoint-url">/api/members/{id}</span>
+
+                        <h4>Path Parameters</h4>
+                        <ul>
+                            <li><code>id</code>: Member ID</li>
+                        </ul>
+
+                        <h4>Response Example</h4>
+                        <pre class="response-example">
+{
+    "id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "membershipStatus": "ACTIVE",
+    "joinDate": "2024-03-09",
+    "borrowedBooks": [
+        {
+            "bookId": 1,
+            "title": "Spring Boot in Action",
+            "dueDate": "2024-03-23"
+        }
+    ]
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="lending-api">
+                <h2>Lending API</h2>
+                <div class="tech-explanation">
+                    <p>The Lending API manages book borrowing and returns. Authentication and proper authorization are required.</p>
+
+                    <div class="endpoint">
+                        <h3>Borrow Book</h3>
+                        <span class="http-method post">POST</span>
+                        <span class="endpoint-url">/api/lending/borrow</span>
+
+                        <h4>Request Body</h4>
+                        <pre class="response-example">
+{
+    "memberId": 1,
+    "bookId": 1,
+    "borrowDate": "2024-03-09"
+}</pre>
+                    </div>
+
+                    <div class="endpoint">
+                        <h3>Return Book</h3>
+                        <span class="http-method post">POST</span>
+                        <span class="endpoint-url">/api/lending/return</span>
+
+                        <h4>Request Body</h4>
+                        <pre class="response-example">
+{
+    "memberId": 1,
+    "bookId": 1,
+    "returnDate": "2024-03-23"
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="auth-api">
+                <h2>Authentication API</h2>
+                <div class="tech-explanation">
+                    <p>The Authentication API handles user authentication and authorization. These endpoints do not require prior authentication.</p>
+
+                    <div class="endpoint">
+                        <h3>Login</h3>
+                        <span class="http-method post">POST</span>
+                        <span class="endpoint-url">/api/auth/login</span>
+
+                        <h4>Request Body</h4>
+                        <pre class="response-example">
+{
+    "username": "librarian",
+    "password": "secure_password"
+}</pre>
+
+                        <h4>Response Example</h4>
+                        <pre class="response-example">
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "type": "Bearer",
+    "expiresIn": 3600
+}</pre>
+                    </div>
+
+                    <div class="endpoint">
+                        <h3>Refresh Token</h3>
+                        <span class="http-method post">POST</span>
+                        <span class="endpoint-url">/api/auth/refresh</span>
+
+                        <h4>Request Headers</h4>
+                        <ul>
+                            <li><code>Authorization</code>: Bearer {refresh_token}</li>
+                        </ul>
+
+                        <h4>Response Example</h4>
+                        <pre class="response-example">
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "type": "Bearer",
+    "expiresIn": 3600
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add theme toggle button -->
+            <button class="theme-toggle">🌓</button>
+        </main>
+    </div>
+</body>
+</html> 

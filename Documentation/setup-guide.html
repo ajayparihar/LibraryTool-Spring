@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Guide - Library Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>Documentation</h2>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#prerequisites">Prerequisites</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#configuration">Configuration</a></li>
+                <li><a href="#database-setup">Database Setup</a></li>
+                <li><a href="#running">Running the Application</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <h1>Setup Guide</h1>
+
+            <div class="card" id="prerequisites">
+                <h2>Prerequisites</h2>
+                <div class="tech-explanation">
+                    <h3>Required Software</h3>
+                    <ul>
+                        <li><strong>Java Development Kit (JDK) 17+</strong>
+                            <ul>
+                                <li>Download from: <a href="https://adoptium.net/">Eclipse Temurin</a></li>
+                                <li>Verify installation: <code>java -version</code></li>
+                            </ul>
+                        </li>
+                        <li><strong>Maven 3.6+</strong>
+                            <ul>
+                                <li>Download from: <a href="https://maven.apache.org/download.cgi">Maven Official Site</a></li>
+                                <li>Verify installation: <code>mvn -version</code></li>
+                            </ul>
+                        </li>
+                        <li><strong>MySQL 8.0+</strong>
+                            <ul>
+                                <li>Download from: <a href="https://dev.mysql.com/downloads/">MySQL Downloads</a></li>
+                                <li>Remember your root password during installation</li>
+                            </ul>
+                        </li>
+                        <li><strong>IDE (Optional but recommended)</strong>
+                            <ul>
+                                <li>IntelliJ IDEA: <a href="https://www.jetbrains.com/idea/download/">Download</a></li>
+                                <li>VS Code: <a href="https://code.visualstudio.com/">Download</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card" id="installation">
+                <h2>Installation</h2>
+                <div class="tech-explanation">
+                    <h3>Clone the Repository</h3>
+                    <pre><code>git clone https://github.com/yourusername/library-management-system.git
+cd library-management-system</code></pre>
+
+                    <h3>Build the Project</h3>
+                    <pre><code>mvn clean install</code></pre>
+                </div>
+            </div>
+
+            <div class="card" id="configuration">
+                <h2>Configuration</h2>
+                <div class="tech-explanation">
+                    <h3>Application Properties</h3>
+                    <p>Create <code>application.properties</code> in <code>src/main/resources</code>:</p>
+                    <pre><code># Database Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/library_db
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+spring.jpa.hibernate.ddl-auto=update
+
+# Server Configuration
+server.port=8080
+
+# JWT Configuration
+jwt.secret=your_jwt_secret_key
+jwt.expiration=86400000
+
+# Logging Configuration
+logging.level.com.example.library=DEBUG</code></pre>
+                </div>
+            </div>
+
+            <div class="card" id="database-setup">
+                <h2>Database Setup</h2>
+                <div class="tech-explanation">
+                    <h3>Create Database</h3>
+                    <pre><code>mysql -u root -p
+CREATE DATABASE library_db;
+CREATE USER 'library_user'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON library_db.* TO 'library_user'@'localhost';
+FLUSH PRIVILEGES;</code></pre>
+
+                    <h3>Initial Data</h3>
+                    <p>The application will automatically create tables on first run. To load sample data:</p>
+                    <pre><code>mysql -u library_user -p library_db < src/main/resources/data.sql</code></pre>
+                </div>
+            </div>
+
+            <div class="card" id="running">
+                <h2>Running the Application</h2>
+                <div class="tech-explanation">
+                    <h3>Using Maven</h3>
+                    <pre><code>mvn spring-boot:run</code></pre>
+
+                    <h3>Using JAR file</h3>
+                    <pre><code>java -jar target/library-management-system-0.0.1-SNAPSHOT.jar</code></pre>
+
+                    <h3>Verify Installation</h3>
+                    <p>Access the application at: <code>http://localhost:8080</code></p>
+                    <p>Default admin credentials:</p>
+                    <ul>
+                        <li>Username: <code>admin</code></li>
+                        <li>Password: <code>admin123</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card" id="troubleshooting">
+                <h2>Troubleshooting</h2>
+                <div class="tech-explanation">
+                    <h3>Common Issues</h3>
+                    <div class="issue">
+                        <h4>Port Already in Use</h4>
+                        <p>Error: <code>Port 8080 already in use</code></p>
+                        <p>Solution: Change the port in application.properties:</p>
+                        <pre><code>server.port=8081</code></pre>
+                    </div>
+
+                    <div class="issue">
+                        <h4>Database Connection Failed</h4>
+                        <p>Error: <code>Communications link failure</code></p>
+                        <p>Solutions:</p>
+                        <ul>
+                            <li>Verify MySQL is running: <code>service mysql status</code></li>
+                            <li>Check credentials in application.properties</li>
+                            <li>Ensure database exists: <code>SHOW DATABASES;</code></li>
+                        </ul>
+                    </div>
+
+                    <div class="issue">
+                        <h4>Maven Build Failure</h4>
+                        <p>Solution:</p>
+                        <ul>
+                            <li>Clear Maven cache: <code>mvn clean</code></li>
+                            <li>Update dependencies: <code>mvn dependency:purge-local-repository</code></li>
+                            <li>Verify Java version matches project requirements</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html> 
