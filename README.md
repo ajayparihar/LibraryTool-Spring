@@ -406,4 +406,226 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Support
 
-For support and queries, please open an issue in the repository or contact the maintainers. 
+For support and queries, please open an issue in the repository or contact the maintainers.
+
+## 📚 Interview Preparation Guide
+
+### Core Concepts
+
+#### 1. Spring Boot Fundamentals
+- **What is Spring Boot?**
+  - Spring Boot is a framework that simplifies Spring application development
+  - Provides auto-configuration and embedded server
+  - Reduces boilerplate code through "Convention over Configuration"
+
+- **Key Features of Spring Boot**
+  - Autoconfiguration
+  - Standalone applications
+  - Embedded servers (Tomcat, Jetty, or Undertow)
+  - Opinionated approach to configuration
+  - Production-ready features (metrics, health checks)
+
+- **Spring Boot Annotations**
+  ```java
+  @SpringBootApplication        // Combines @Configuration, @EnableAutoConfiguration, and @ComponentScan
+  @RestController              // Creates RESTful web services
+  @Service                     // Business logic layer
+  @Repository                  // Data access layer
+  @Component                   // Generic Spring-managed component
+  @Autowired                   // Dependency injection
+  @Configuration              // Configuration class
+  @Bean                       // Method-level annotation for bean definition
+  ```
+
+#### 2. JPA (Java Persistence API)
+- **Key Concepts**
+  - Object-Relational Mapping (ORM)
+  - Entity lifecycle (Persist, Merge, Remove, Refresh)
+  - JPQL (Java Persistence Query Language)
+  - Criteria API
+
+- **Important JPA Annotations**
+  ```java
+  @Entity                     // Marks class as JPA entity
+  @Table                      // Specifies table details
+  @Id                         // Primary key
+  @GeneratedValue            // Auto-generation strategy
+  @Column                     // Column properties
+  @OneToMany                  // One-to-many relationship
+  @ManyToOne                  // Many-to-one relationship
+  @ManyToMany                // Many-to-many relationship
+  ```
+
+#### 3. Spring Security
+- **Core Concepts**
+  - Authentication vs Authorization
+  - UserDetailsService
+  - SecurityFilterChain
+  - JWT (JSON Web Tokens)
+
+- **Security Implementation**
+  ```java
+  // Authentication Provider
+  @Bean
+  public AuthenticationProvider authenticationProvider() {
+      DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+      provider.setUserDetailsService(userDetailsService);
+      provider.setPasswordEncoder(passwordEncoder());
+      return provider;
+  }
+
+  // Password Encoder
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+      return new BCryptPasswordEncoder();
+  }
+  ```
+
+#### 4. RESTful Web Services
+- **REST Principles**
+  - Stateless
+  - Client-Server architecture
+  - Uniform interface
+  - Cacheable
+  - Layered system
+
+- **HTTP Methods**
+  ```
+  GET     - Retrieve resource
+  POST    - Create resource
+  PUT     - Update resource
+  DELETE  - Remove resource
+  PATCH   - Partial update
+  ```
+
+- **Status Codes**
+  ```
+  200 OK              - Successful request
+  201 Created         - Resource created
+  400 Bad Request     - Client error
+  401 Unauthorized    - Authentication required
+  403 Forbidden       - Authorization failed
+  404 Not Found       - Resource not found
+  500 Server Error    - Internal server error
+  ```
+
+### Common Interview Questions
+
+#### 1. Spring Boot Questions
+1. **Q: What is Spring Boot and how is it different from Spring?**
+   - A: Spring Boot is a framework built on top of Spring that simplifies development by:
+     - Providing auto-configuration
+     - Eliminating boilerplate configuration
+     - Including an embedded server
+     - Offering production-ready features
+
+2. **Q: Explain Spring Boot's auto-configuration.**
+   - A: Auto-configuration automatically configures a Spring application based on:
+     - Dependencies on the classpath
+     - Properties defined
+     - Beans in the context
+     - Can be customized or overridden as needed
+
+#### 2. JPA and Database Questions
+1. **Q: Explain the difference between @OneToMany and @ManyToOne.**
+   - A: 
+     - @OneToMany: One entity instance relates to multiple instances of another entity
+     - @ManyToOne: Multiple instances of an entity relate to one instance of another entity
+     - Example: One Book can have many Borrowings (OneToMany), while many Borrowings relate to one Book (ManyToOne)
+
+2. **Q: What are the different types of entity relationships in JPA?**
+   - A:
+     - One-to-One (@OneToOne)
+     - One-to-Many (@OneToMany)
+     - Many-to-One (@ManyToOne)
+     - Many-to-Many (@ManyToMany)
+
+#### 3. Security Questions
+1. **Q: How does JWT authentication work in this application?**
+   - A: JWT authentication follows these steps:
+     1. User provides credentials
+     2. Server validates and generates JWT
+     3. Token is sent back to client
+     4. Client includes token in subsequent requests
+     5. Server validates token for each request
+
+2. **Q: Explain the difference between Authentication and Authorization.**
+   - A:
+     - Authentication: Verifies who the user is (login process)
+     - Authorization: Determines what resources a user can access (roles and permissions)
+
+#### 4. Architecture Questions
+1. **Q: Explain the layered architecture in this application.**
+   - A: The application follows a layered architecture:
+     - Controller Layer (REST APIs)
+     - Service Layer (Business Logic)
+     - Repository Layer (Data Access)
+     - Entity Layer (Data Model)
+
+2. **Q: What are the benefits of using DTOs?**
+   - A: DTOs (Data Transfer Objects):
+     - Decouple client interface from internal data structure
+     - Control data exposure
+     - Optimize network traffic
+     - Version API responses
+
+### Design Patterns Used
+
+1. **Repository Pattern**
+   - Abstracts data persistence
+   - Provides collection-like interface
+   - Example: BookRepository
+
+2. **Dependency Injection**
+   - Loose coupling
+   - Better testability
+   - Example: Constructor injection in services
+
+3. **Builder Pattern**
+   - Used in entity creation
+   - Flexible object construction
+   - Example: @Builder in Book entity
+
+4. **DTO Pattern**
+   - Data transfer between layers
+   - API response shaping
+   - Example: BookDTO
+
+### Best Practices Demonstrated
+
+1. **Code Organization**
+   - Clear package structure
+   - Separation of concerns
+   - Modular design
+
+2. **Security**
+   - Password encryption
+   - JWT token validation
+   - Role-based access control
+
+3. **Database**
+   - Proper indexing
+   - Relationship mapping
+   - Transaction management
+
+4. **API Design**
+   - RESTful principles
+   - Proper HTTP methods
+   - Meaningful status codes
+
+### Performance Considerations
+
+1. **Database Optimization**
+   - Proper indexing
+   - Query optimization
+   - Connection pooling
+
+2. **Caching Strategies**
+   - Entity caching
+   - Query results caching
+   - Cache invalidation
+
+3. **N+1 Problem Prevention**
+   - Eager vs Lazy loading
+   - Join fetching
+   - Batch processing 
