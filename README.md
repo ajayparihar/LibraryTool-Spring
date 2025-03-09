@@ -1,70 +1,403 @@
 # Library Management System
 
-A robust Spring Boot application for managing library operations including book management, user management, and borrowing functionality. This system provides a complete solution for libraries to digitize their operations and manage their resources efficiently.
+A Spring Boot application for managing library operations including book management and lender tracking. This system provides a solution for libraries to digitize their basic operations.
 
 ## 🎯 Overview
 
 The Library Management System is designed to help libraries:
-- Manage their book inventory efficiently
-- Handle member registrations and profiles
-- Track book borrowing and returns
-- Generate reports and analytics
-- Implement fine management system
-- Send notifications for due dates and overdue books
+- Manage their book inventory
+- Track book lending operations
+- Handle basic CRUD operations for books and lenders
+- Provide a RESTful API interface
+- Document API endpoints using Swagger/OpenAPI
 
-## 🚀 Technology Stack
+## 🏗️ Architecture & Design
 
-- **Java 23** - Latest LTS version for optimal performance
-- **Spring Boot 3.2.4** - For building production-ready applications
-- **Spring Data JPA** - For simplified data persistence
-- **PostgreSQL** - Robust, open-source database
-- **Lombok** - For reducing boilerplate code
-- **Maven** - For dependency management and build automation
-- **Spring Security** - For authentication and authorization
-- **Swagger/OpenAPI** - For API documentation
-- **JUnit & Mockito** - For unit and integration testing
-- **Logback** - For application logging
+### Layered Architecture
+The application follows a clean layered architecture:
+1. **Presentation Layer (Controllers)**
+   - REST endpoints for client interaction
+   - Request/Response DTOs for data transfer
+   - Input validation
+   - Error handling through Global Exception Handler
 
-## 📁 Project Structure
+2. **Business Layer (Services)**
+   - Core business logic implementation
+   - Transaction management
+   - Data validation and processing
+   - Business rules enforcement
 
+3. **Data Access Layer (Repositories)**
+   - Database operations through JPA
+   - Entity management
+   - Data persistence logic
+
+4. **Domain Layer (Entities & DTOs)**
+   - Business entities (Book, Lender)
+   - Data Transfer Objects for API communication
+   - Domain-specific validation rules
+
+### Design Patterns
+- **DTO Pattern**: Separates API contracts from domain models
+- **Repository Pattern**: Abstracts data access logic
+- **Dependency Injection**: Promotes loose coupling
+- **Builder Pattern**: For object construction (via Lombok)
+- **Factory Pattern**: For object creation where needed
+
+## 🔧 Technical Implementation
+
+### Code Organization
 ```
 src/main/java/com/example/library/
 ├── config/         # Configuration classes
-│   ├── SwaggerConfig.java
-│   ├── SecurityConfig.java
-│   └── WebConfig.java
+│   └── OpenAPIConfig.java
 ├── constant/       # Constants and enums
-│   ├── BookStatus.java
-│   ├── UserRole.java
-│   └── ErrorMessages.java
+│   └── LibraryConstants.java
 ├── controller/     # REST API controllers
 │   ├── BookController.java
-│   ├── UserController.java
-│   └── BorrowingController.java
+│   └── LenderController.java
 ├── dto/           # Data Transfer Objects
-│   ├── request/
-│   └── response/
+│   ├── BookRequestDTO.java
+│   └── BookResponseDTO.java
 ├── entity/        # JPA entities
 │   ├── Book.java
-│   ├── User.java
-│   └── Borrowing.java
+│   └── Lender.java
 ├── exception/     # Custom exceptions
 │   ├── GlobalExceptionHandler.java
-│   └── CustomExceptions.java
-├── model/         # Domain models
+│   ├── ResourceNotFoundException.java
+│   └── ErrorResponse.java
 ├── repository/    # JPA repositories
-├── security/      # Security configurations
-│   ├── JwtTokenProvider.java
-│   └── UserDetailsServiceImpl.java
+│   ├── BookRepository.java
+│   └── LenderRepository.java
 ├── service/       # Business logic
-│   ├── impl/
-│   └── interfaces/
+│   ├── BookService.java
+│   └── LenderService.java
 └── util/          # Utility classes
-    ├── DateUtils.java
-    └── ValidationUtils.java
+    └── BookMapper.java
 ```
 
-## 🔧 Dependencies
+### Code Quality & Best Practices
+1. **Clean Code Principles**
+   - Meaningful naming conventions
+   - Single Responsibility Principle
+   - DRY (Don't Repeat Yourself)
+   - SOLID principles adherence
+
+2. **Error Handling**
+   - Global exception handling
+   - Custom exceptions for business cases
+   - Proper error messages and status codes
+   - Structured error responses
+
+3. **Validation**
+   - Input validation at DTO level
+   - Business validation in service layer
+   - Database constraints
+
+4. **Documentation**
+   - OpenAPI/Swagger documentation
+   - Code comments for complex logic
+   - README and setup instructions
+   - API endpoint documentation
+
+### Annotations Guide
+1. **Spring Framework Annotations**
+   ```java
+   @SpringBootApplication     // Main application class
+   @Configuration            // Configuration classes
+   @RestController           // REST API controllers
+   @Service                  // Service layer components
+   @Repository              // Data access layer components
+   @Component               // Generic Spring components
+   @Autowired              // Dependency injection
+   @Qualifier              // Specific bean selection
+   @Value                  // Property injection
+   ```
+
+2. **JPA Annotations**
+   ```java
+   @Entity                 // JPA entity classes
+   @Table                  // Database table mapping
+   @Id                     // Primary key
+   @GeneratedValue        // Auto-generation strategy
+   @Column                // Column mapping
+   @Transient            // Non-persistent field
+   @OneToMany            // One-to-many relationship
+   @ManyToOne            // Many-to-one relationship
+   @JoinColumn           // Foreign key mapping
+   ```
+
+3. **Validation Annotations**
+   ```java
+   @NotNull              // Field must not be null
+   @NotEmpty             // Collection must not be empty
+   @NotBlank             // String must not be blank
+   @Size                 // Size constraints
+   @Min                  // Minimum value
+   @Max                  // Maximum value
+   @Pattern              // Regex pattern matching
+   @Email               // Email format validation
+   ```
+
+4. **Lombok Annotations**
+   ```java
+   @Data                 // Getters, setters, equals, hashCode, toString
+   @Builder              // Builder pattern implementation
+   @NoArgsConstructor   // No-args constructor
+   @AllArgsConstructor  // All-args constructor
+   @Getter              // Getter methods
+   @Setter              // Setter methods
+   @Slf4j               // Logger field
+   ```
+
+5. **Documentation Annotations**
+   ```java
+   @Api                  // Swagger API documentation
+   @ApiOperation        // API operation documentation
+   @ApiParam            // API parameter documentation
+   @ApiResponse         // API response documentation
+   ```
+
+### Code Comments & Documentation
+
+1. **Class-Level Documentation**
+   ```java
+   /**
+    * Represents a book entity in the library system.
+    * This class handles the book's basic information and relationships.
+    *
+    * @author [Author Name]
+    * @version 1.0
+    * @since 2024-03-21
+    */
+   @Entity
+   public class Book {
+       // Class implementation
+   }
+   ```
+
+2. **Method-Level Documentation**
+   ```java
+   /**
+    * Retrieves a book by its unique identifier.
+    *
+    * @param id The unique identifier of the book
+    * @return The book if found
+    * @throws ResourceNotFoundException if book not found
+    */
+   public Book getBookById(Long id) {
+       // Method implementation
+   }
+   ```
+
+3. **Field Documentation**
+   ```java
+   /** The unique identifier for the book */
+   @Id
+   private Long id;
+
+   /** The title of the book - must not be empty */
+   @NotBlank
+   private String title;
+   ```
+
+4. **Implementation Comments**
+   ```java
+   // Calculate late fees based on days overdue
+   int daysOverdue = calculateDaysOverdue(returnDate);
+   
+   /* Complex business logic explanation
+    * 1. Check if book is available
+    * 2. Validate user eligibility
+    * 3. Process lending transaction
+    */
+   ```
+
+### Code Organization Conventions
+
+1. **Package Structure**
+   ```
+   com.example.library
+   ├── annotation/     # Custom annotations
+   │   └── Auditable.java
+   ├── aspect/        # AOP aspects
+   │   └── LoggingAspect.java
+   ├── config/        # Configurations
+   ├── constant/      # Constants
+   ├── controller/    # Controllers
+   ├── dto/           # DTOs
+   ├── entity/        # Entities
+   ├── exception/     # Exceptions
+   ├── repository/    # Repositories
+   ├── service/       # Services
+   └── util/          # Utilities
+   ```
+
+2. **Class Structure**
+   ```java
+   public class BookService {
+       // Constants
+       private static final int MAX_BOOKS = 5;
+       
+       // Dependencies
+       private final BookRepository bookRepository;
+       
+       // Constructors
+       public BookService(BookRepository bookRepository) {
+           this.bookRepository = bookRepository;
+       }
+       
+       // Public methods
+       public Book findBook(Long id) { }
+       
+       // Private helper methods
+       private void validateBook(Book book) { }
+   }
+   ```
+
+3. **Naming Conventions**
+   - Classes: PascalCase (BookService)
+   - Methods: camelCase (findBookById)
+   - Variables: camelCase (bookRepository)
+   - Constants: UPPER_SNAKE_CASE (MAX_BOOKS)
+   - Packages: lowercase (com.example.library)
+
+## 🚀 Technology Stack
+
+### Core Technologies & Their Benefits
+
+1. **Java 23**
+   - Latest LTS version providing modern language features
+   - Benefits:
+     - Pattern matching for switch expressions
+     - Record patterns and classes
+     - Virtual threads for improved scalability
+     - Enhanced string templates
+     - Improved garbage collection
+   - Potential Enhancements:
+     - Upgrade to future LTS versions
+     - Utilize more Java 23 specific features
+     - Implement virtual threads for async operations
+
+2. **Spring Boot 3.2.4**
+   - Modern, production-ready framework
+   - Benefits:
+     - Auto-configuration
+     - Embedded server
+     - Production-ready metrics
+     - Easy dependency management
+     - Rich ecosystem of starters
+   - Potential Enhancements:
+     - Implement Spring Security
+     - Add Spring Actuator for monitoring
+     - Implement caching with Spring Cache
+     - Add Spring Cloud for microservices
+
+3. **Spring Data JPA**
+   - Simplified data access layer
+   - Benefits:
+     - Reduced boilerplate code
+     - Automatic query generation
+     - Pagination and sorting support
+     - Auditing support
+     - Transaction management
+   - Potential Enhancements:
+     - Implement query optimization
+     - Add custom repositories
+     - Implement specification pattern
+     - Add query caching
+
+4. **PostgreSQL**
+   - Robust, open-source database
+   - Benefits:
+     - ACID compliance
+     - JSON support
+     - Full-text search
+     - Concurrent access
+     - Rich data types
+   - Potential Enhancements:
+     - Implement connection pooling (HikariCP)
+     - Add database indexing strategy
+     - Implement partitioning
+     - Set up replication
+
+5. **Lombok**
+   - Boilerplate code reduction
+   - Benefits:
+     - Cleaner code
+     - Reduced development time
+     - Less error-prone
+     - Better maintainability
+   - Potential Enhancements:
+     - Custom Lombok annotations
+     - Builder pattern implementation
+     - Add validation annotations
+
+6. **Maven**
+   - Dependency management and build tool
+   - Benefits:
+     - Declarative dependencies
+     - Standardized build lifecycle
+     - Rich plugin ecosystem
+     - Dependency scope management
+   - Potential Enhancements:
+     - Custom Maven plugins
+     - Multi-module project structure
+     - Build profiles for different environments
+
+7. **SpringDoc OpenAPI**
+   - API documentation
+   - Benefits:
+     - Interactive API documentation
+     - API testing capability
+     - Standards compliance
+     - Easy integration
+   - Potential Enhancements:
+     - Custom documentation templates
+     - Security documentation
+     - Response examples
+     - API versioning
+
+8. **JUnit & Testing Framework**
+   - Testing infrastructure
+   - Benefits:
+     - Comprehensive testing support
+     - Assertion libraries
+     - Mocking capabilities
+     - Test lifecycle management
+   - Potential Enhancements:
+     - Add TestContainers for integration tests
+     - Implement BDD with Cucumber
+     - Add performance tests with JMeter
+     - Code coverage with JaCoCo
+
+### Additional Technologies to Consider
+
+1. **Security Stack**
+   - Spring Security
+   - JWT Authentication
+   - OAuth2
+   - Role-based access control
+
+2. **Caching Solutions**
+   - Redis
+   - Caffeine
+   - Hazelcast
+   - EhCache
+
+3. **Monitoring & Observability**
+   - Spring Actuator
+   - Prometheus
+   - Grafana
+   - ELK Stack
+
+4. **DevOps Tools**
+   - Docker
+   - Kubernetes
+   - Jenkins/GitHub Actions
+   - SonarQube
+
+### Dependencies & Versions
 
 ```xml
 <dependencies>
@@ -72,25 +405,23 @@ src/main/java/com/example/library/
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
+        <!-- Latest version from Spring Boot parent -->
+        <!-- Provides: -->
+        <!-- - Embedded Tomcat -->
+        <!-- - Spring MVC -->
+        <!-- - Jackson for JSON -->
+        <!-- - Logging -->
     </dependency>
 
     <!-- Spring Boot Starter Data JPA -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-
-    <!-- Spring Security -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-
-    <!-- JWT Token -->
-    <dependency>
-        <groupId>io.jsonwebtoken</groupId>
-        <artifactId>jjwt</artifactId>
-        <version>0.9.1</version>
+        <!-- Provides: -->
+        <!-- - Hibernate ORM -->
+        <!-- - Connection pooling -->
+        <!-- - Transaction management -->
+        <!-- - JPA repositories -->
     </dependency>
 
     <!-- PostgreSQL Driver -->
@@ -98,6 +429,11 @@ src/main/java/com/example/library/
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <scope>runtime</scope>
+        <!-- Latest version compatible with Spring Boot -->
+        <!-- Features: -->
+        <!-- - JDBC compliance -->
+        <!-- - Connection pooling -->
+        <!-- - SSL support -->
     </dependency>
 
     <!-- Lombok -->
@@ -105,16 +441,32 @@ src/main/java/com/example/library/
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
         <optional>true</optional>
+        <!-- Features: -->
+        <!-- - @Data annotation -->
+        <!-- - @Builder support -->
+        <!-- - @Slf4j logging -->
     </dependency>
 
-    <!-- Swagger UI -->
+    <!-- SpringDoc OpenAPI UI -->
     <dependency>
         <groupId>org.springdoc</groupId>
-        <artifactId>springdoc-openapi-ui</artifactId>
-        <version>1.7.0</version>
+        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        <version>2.3.0</version>
+        <!-- Features: -->
+        <!-- - Swagger UI -->
+        <!-- - OpenAPI 3.0 -->
+        <!-- - API documentation -->
     </dependency>
 
-    <!-- Testing Dependencies -->
+    <!-- Recommended Additional Dependencies -->
+    
+    <!-- Validation -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+
+    <!-- Testing -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-test</artifactId>
@@ -123,19 +475,123 @@ src/main/java/com/example/library/
 </dependencies>
 ```
 
+### Technology Upgrade Path
+
+1. **Short-term Improvements**
+   - Add Spring Security
+   - Implement connection pooling
+   - Add validation framework
+   - Implement basic monitoring
+
+2. **Mid-term Enhancements**
+   - Implement caching
+   - Add message queuing
+   - Set up CI/CD pipeline
+   - Add comprehensive testing
+
+3. **Long-term Evolution**
+   - Microservices architecture
+   - Container orchestration
+   - Advanced monitoring
+   - Performance optimization
+
+## 🧪 Testing Strategy
+
+### Unit Testing
+- Service layer testing with JUnit
+- Mocking dependencies using Mockito
+- Testing business logic and edge cases
+- Validation testing
+
+### Integration Testing
+- Testing API endpoints
+- Database integration tests
+- End-to-end flow testing
+- Configuration testing
+
+### Test Coverage
+- Unit test coverage for business logic
+- Integration tests for API endpoints
+- Error handling scenarios
+- Edge cases and validation
+
+## 📈 Scalability & Performance
+
+### Scalability Features
+1. **Horizontal Scalability**
+   - Stateless application design
+   - RESTful architecture
+   - Database connection pooling
+   - Containerization-ready
+
+2. **Performance Optimization**
+   - JPA query optimization
+   - Proper indexing strategy
+   - Connection pooling
+   - Lazy loading where appropriate
+
+### Future Scalability Considerations
+- Caching implementation (e.g., Redis)
+- Message queuing for async operations
+- Load balancing
+- Microservices architecture
+
+## 🔌 Frontend Integration
+
+### API Design
+- RESTful endpoints
+- Consistent response formats
+- Proper HTTP status codes
+- CORS configuration
+
+### Integration Points
+1. **API Endpoints**
+   ```
+   Books:
+   GET    /books      - List all books
+   GET    /books/{id} - Get book by ID
+   POST   /books      - Add new book
+   PUT    /books/{id} - Update book
+   DELETE /books/{id} - Delete book
+
+   Lenders:
+   GET    /lenders      - List all lenders
+   GET    /lenders/{id} - Get lender by ID
+   POST   /lenders      - Add new lender
+   DELETE /lenders/{id} - Delete lender
+   ```
+
+2. **Response Format**
+   ```json
+   {
+     "data": {
+       // Response data
+     },
+     "message": "Success message",
+     "timestamp": "2024-03-21T10:00:00Z"
+   }
+   ```
+
+3. **Error Format**
+   ```json
+   {
+     "message": "Error message",
+     "details": "Detailed error description",
+     "timestamp": "2024-03-21T10:00:00Z"
+   }
+   ```
+
 ## ⚙️ Configuration
 
 ### Application Properties
 ```properties
-# Application Configuration
-spring.application.name=LibraryApplication
+# Server Configuration
 server.port=8080
 
 # Database Configuration
 spring.datasource.url=jdbc:postgresql://localhost:5432/librarydb
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.username=library_db_username
+spring.datasource.password=1234
 
 # JPA/Hibernate Configuration
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
@@ -143,489 +599,83 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 
-# Security Configuration
-jwt.secret=your_jwt_secret_key
-jwt.expiration=86400000
-
-# Logging Configuration
-logging.level.root=INFO
-logging.level.com.example.library=DEBUG
+# Swagger UI Configuration
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.api-docs.path=/api-docs
 ```
 
-## 🏗️ Project Components
+## 🛠️ Maintainability
 
-### 1. Entity Layer
-Located in `entity/` directory, contains JPA entities with relationships:
+### Code Maintenance
+1. **Version Control**
+   - Git for source control
+   - Meaningful commit messages
+   - Branch strategy for features/fixes
 
-```java
-@Entity
-@Table(name = "books")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(nullable = false)
-    private String title;
-    
-    @Column(nullable = false)
-    private String author;
-    
-    @Column(unique = true, nullable = false)
-    private String isbn;
-    
-    @Enumerated(EnumType.STRING)
-    private BookStatus status;
-    
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    private List<Borrowing> borrowings;
-    
-    @Column(name = "publication_year")
-    private Integer publicationYear;
-    
-    private String publisher;
-    private String description;
-    private Integer totalCopies;
-    private Integer availableCopies;
-    
-    @CreatedDate
-    private LocalDateTime createdAt;
-    
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-}
-```
+2. **Documentation**
+   - In-code documentation
+   - API documentation
+   - Setup and deployment guides
 
-### 2. Repository Layer
-Advanced repository methods:
+3. **Code Quality Tools**
+   - Lombok for boilerplate reduction
+   - OpenAPI for API documentation
+   - JUnit for testing
 
-```java
-@Repository
-public interface BookRepository extends JpaRepository<Book, Long> {
-    Optional<Book> findByIsbn(String isbn);
-    List<Book> findByAuthor(String author);
-    List<Book> findByTitleContainingIgnoreCase(String title);
-    List<Book> findByPublicationYearBetween(Integer startYear, Integer endYear);
-    
-    @Query("SELECT b FROM Book b WHERE b.availableCopies > 0")
-    List<Book> findAvailableBooks();
-    
-    @Query("SELECT b FROM Book b WHERE b.availableCopies = 0")
-    List<Book> findUnavailableBooks();
-}
-```
+### Development Workflow
+1. **Local Development**
+   - Clone repository
+   - Configure database
+   - Run application
+   - Access Swagger UI
 
-## 🔒 Security Implementation
+2. **Testing**
+   - Run unit tests
+   - Run integration tests
+   - Manual API testing
 
-### JWT Authentication
-```java
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-    
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/books/**").hasRole("USER")
-                .antMatchers("/api/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-            .and()
-            .apply(new JwtConfigurer(jwtTokenProvider));
-    }
-}
-```
-
-## 🌟 Features
-
-### 1. Book Management
-- CRUD operations for books
-- ISBN validation
-- Book availability tracking
-- Search by multiple criteria
-- Book categorization
-- Publication management
-
-### 2. User Management
-- Role-based access control (ADMIN, LIBRARIAN, USER)
-- User profile management
-- Password encryption
-- Session management
-- Activity logging
-
-### 3. Borrowing System
-- Book checkout and return
-- Due date management
-- Fine calculation
-- Reservation system
-- Email notifications
-- History tracking
-
-### 4. Reports and Analytics
-- Popular books report
-- Overdue books report
-- User activity analysis
-- Fine collection reports
-- Inventory status
+3. **Deployment**
+   - Build application
+   - Configure environment
+   - Deploy and verify
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 - JDK 23
 - Maven 3.8+
-- PostgreSQL 15+
+- PostgreSQL
 - Git
 
 ### Installation Steps
-
 1. Clone the repository
-```bash
-git clone [repository-url]
-cd library-management-system
-```
+   ```bash
+   git clone [repository-url]
+   cd library-management-system
+   ```
 
 2. Create PostgreSQL database
-```sql
-CREATE DATABASE librarydb;
-CREATE USER library_db_username WITH PASSWORD '1234';
-GRANT ALL PRIVILEGES ON DATABASE librarydb TO library_db_username;
-```
+   ```sql
+   CREATE DATABASE librarydb;
+   ```
 
-3. Configure application.properties
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/librarydb
-spring.datasource.username=library_db_username
-spring.datasource.password=1234
-```
+3. Configure application.properties with your database credentials
 
 4. Build the project
-```bash
-mvn clean install
-```
+   ```bash
+   mvn clean install
+   ```
 
 5. Run the application
-```bash
-mvn spring-boot:run
-```
+   ```bash
+   mvn spring-boot:run
+   ```
 
-## 📝 API Documentation
-
-### Available Endpoints
-
-#### Authentication
-- POST `/api/auth/signup` - Register new user
-- POST `/api/auth/login` - User login
-- POST `/api/auth/refresh` - Refresh token
-
-#### Books
-- GET `/api/books` - List all books
-- GET `/api/books/{id}` - Get book by ID
-- POST `/api/books` - Add new book
-- PUT `/api/books/{id}` - Update book
-- DELETE `/api/books/{id}` - Delete book
-- GET `/api/books/search` - Search books
-
-#### Users
-- GET `/api/users` - List all users
-- GET `/api/users/{id}` - Get user by ID
-- PUT `/api/users/{id}` - Update user
-- DELETE `/api/users/{id}` - Delete user
-
-#### Borrowings
-- POST `/api/borrowings` - Create borrowing
-- PUT `/api/borrowings/{id}/return` - Return book
-- GET `/api/borrowings/user/{userId}` - Get user borrowings
-- GET `/api/borrowings/overdue` - Get overdue borrowings
-
-## 🧪 Testing
-
-### Unit Tests
-```bash
-mvn test
-```
-
-### Integration Tests
-```bash
-mvn verify
-```
-
-### Test Coverage
-```bash
-mvn test jacoco:report
-```
-
-## 📦 Build and Deployment
-
-### Local Build
-```bash
-mvn clean package
-```
-
-### Docker Build
-```bash
-docker build -t library-management-system .
-docker run -p 8080:8080 library-management-system
-```
-
-## 🔍 Logging
-
-The application uses SLF4J with Logback for logging. Logs are written to:
-- Console
-- `logs/application.log`
-- Error logs: `logs/error.log`
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Code Style Guidelines
-- Follow Java naming conventions
-- Use meaningful variable and method names
-- Write unit tests for new features
-- Document public APIs
-- Keep methods small and focused
+6. Access the API documentation
+   ```
+   http://localhost:8080/swagger-ui.html
+   ```
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📞 Support
-
-For support and queries, please open an issue in the repository or contact the maintainers.
-
-## 📚 Interview Preparation Guide
-
-### Core Concepts
-
-#### 1. Spring Boot Fundamentals
-- **What is Spring Boot?**
-  - Spring Boot is a framework that simplifies Spring application development
-  - Provides auto-configuration and embedded server
-  - Reduces boilerplate code through "Convention over Configuration"
-
-- **Key Features of Spring Boot**
-  - Autoconfiguration
-  - Standalone applications
-  - Embedded servers (Tomcat, Jetty, or Undertow)
-  - Opinionated approach to configuration
-  - Production-ready features (metrics, health checks)
-
-- **Spring Boot Annotations**
-  ```java
-  @SpringBootApplication        // Combines @Configuration, @EnableAutoConfiguration, and @ComponentScan
-  @RestController              // Creates RESTful web services
-  @Service                     // Business logic layer
-  @Repository                  // Data access layer
-  @Component                   // Generic Spring-managed component
-  @Autowired                   // Dependency injection
-  @Configuration              // Configuration class
-  @Bean                       // Method-level annotation for bean definition
-  ```
-
-#### 2. JPA (Java Persistence API)
-- **Key Concepts**
-  - Object-Relational Mapping (ORM)
-  - Entity lifecycle (Persist, Merge, Remove, Refresh)
-  - JPQL (Java Persistence Query Language)
-  - Criteria API
-
-- **Important JPA Annotations**
-  ```java
-  @Entity                     // Marks class as JPA entity
-  @Table                      // Specifies table details
-  @Id                         // Primary key
-  @GeneratedValue            // Auto-generation strategy
-  @Column                     // Column properties
-  @OneToMany                  // One-to-many relationship
-  @ManyToOne                  // Many-to-one relationship
-  @ManyToMany                // Many-to-many relationship
-  ```
-
-#### 3. Spring Security
-- **Core Concepts**
-  - Authentication vs Authorization
-  - UserDetailsService
-  - SecurityFilterChain
-  - JWT (JSON Web Tokens)
-
-- **Security Implementation**
-  ```java
-  // Authentication Provider
-  @Bean
-  public AuthenticationProvider authenticationProvider() {
-      DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-      provider.setUserDetailsService(userDetailsService);
-      provider.setPasswordEncoder(passwordEncoder());
-      return provider;
-  }
-
-  // Password Encoder
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-      return new BCryptPasswordEncoder();
-  }
-  ```
-
-#### 4. RESTful Web Services
-- **REST Principles**
-  - Stateless
-  - Client-Server architecture
-  - Uniform interface
-  - Cacheable
-  - Layered system
-
-- **HTTP Methods**
-  ```
-  GET     - Retrieve resource
-  POST    - Create resource
-  PUT     - Update resource
-  DELETE  - Remove resource
-  PATCH   - Partial update
-  ```
-
-- **Status Codes**
-  ```
-  200 OK              - Successful request
-  201 Created         - Resource created
-  400 Bad Request     - Client error
-  401 Unauthorized    - Authentication required
-  403 Forbidden       - Authorization failed
-  404 Not Found       - Resource not found
-  500 Server Error    - Internal server error
-  ```
-
-### Common Interview Questions
-
-#### 1. Spring Boot Questions
-1. **Q: What is Spring Boot and how is it different from Spring?**
-   - A: Spring Boot is a framework built on top of Spring that simplifies development by:
-     - Providing auto-configuration
-     - Eliminating boilerplate configuration
-     - Including an embedded server
-     - Offering production-ready features
-
-2. **Q: Explain Spring Boot's auto-configuration.**
-   - A: Auto-configuration automatically configures a Spring application based on:
-     - Dependencies on the classpath
-     - Properties defined
-     - Beans in the context
-     - Can be customized or overridden as needed
-
-#### 2. JPA and Database Questions
-1. **Q: Explain the difference between @OneToMany and @ManyToOne.**
-   - A: 
-     - @OneToMany: One entity instance relates to multiple instances of another entity
-     - @ManyToOne: Multiple instances of an entity relate to one instance of another entity
-     - Example: One Book can have many Borrowings (OneToMany), while many Borrowings relate to one Book (ManyToOne)
-
-2. **Q: What are the different types of entity relationships in JPA?**
-   - A:
-     - One-to-One (@OneToOne)
-     - One-to-Many (@OneToMany)
-     - Many-to-One (@ManyToOne)
-     - Many-to-Many (@ManyToMany)
-
-#### 3. Security Questions
-1. **Q: How does JWT authentication work in this application?**
-   - A: JWT authentication follows these steps:
-     1. User provides credentials
-     2. Server validates and generates JWT
-     3. Token is sent back to client
-     4. Client includes token in subsequent requests
-     5. Server validates token for each request
-
-2. **Q: Explain the difference between Authentication and Authorization.**
-   - A:
-     - Authentication: Verifies who the user is (login process)
-     - Authorization: Determines what resources a user can access (roles and permissions)
-
-#### 4. Architecture Questions
-1. **Q: Explain the layered architecture in this application.**
-   - A: The application follows a layered architecture:
-     - Controller Layer (REST APIs)
-     - Service Layer (Business Logic)
-     - Repository Layer (Data Access)
-     - Entity Layer (Data Model)
-
-2. **Q: What are the benefits of using DTOs?**
-   - A: DTOs (Data Transfer Objects):
-     - Decouple client interface from internal data structure
-     - Control data exposure
-     - Optimize network traffic
-     - Version API responses
-
-### Design Patterns Used
-
-1. **Repository Pattern**
-   - Abstracts data persistence
-   - Provides collection-like interface
-   - Example: BookRepository
-
-2. **Dependency Injection**
-   - Loose coupling
-   - Better testability
-   - Example: Constructor injection in services
-
-3. **Builder Pattern**
-   - Used in entity creation
-   - Flexible object construction
-   - Example: @Builder in Book entity
-
-4. **DTO Pattern**
-   - Data transfer between layers
-   - API response shaping
-   - Example: BookDTO
-
-### Best Practices Demonstrated
-
-1. **Code Organization**
-   - Clear package structure
-   - Separation of concerns
-   - Modular design
-
-2. **Security**
-   - Password encryption
-   - JWT token validation
-   - Role-based access control
-
-3. **Database**
-   - Proper indexing
-   - Relationship mapping
-   - Transaction management
-
-4. **API Design**
-   - RESTful principles
-   - Proper HTTP methods
-   - Meaningful status codes
-
-### Performance Considerations
-
-1. **Database Optimization**
-   - Proper indexing
-   - Query optimization
-   - Connection pooling
-
-2. **Caching Strategies**
-   - Entity caching
-   - Query results caching
-   - Cache invalidation
-
-3. **N+1 Problem Prevention**
-   - Eager vs Lazy loading
-   - Join fetching
-   - Batch processing 
+This project is licensed under the MIT License. 
