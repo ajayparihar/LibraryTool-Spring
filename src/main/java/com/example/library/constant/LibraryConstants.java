@@ -6,9 +6,8 @@ public final class LibraryConstants {
     }
 
     // API Endpoints
-    public static final String API_VERSION = "/api/v1";
-    public static final String BOOKS_ENDPOINT = API_VERSION + "/books";
-    public static final String LENDERS_ENDPOINT = API_VERSION + "/lenders";
+    public static final String BOOKS_ENDPOINT = "/books";
+    public static final String LENDERS_ENDPOINT = "/lenders";
 
     // Error Messages
     public static final String BOOK_NOT_FOUND = "Book not found with id: ";
