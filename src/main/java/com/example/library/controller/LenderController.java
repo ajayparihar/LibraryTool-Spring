@@ -18,8 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.library.entity.Lender;
 import com.example.library.service.LenderService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/lenders")
+@Tag(name = "Lender Management", description = "APIs for managing lenders in the library system")
 public class LenderController {
 
     /**
@@ -35,45 +44,55 @@ public class LenderController {
         this.lenderService = lenderService;
     }
 
-    /**
-     * Retrieves all lenders from the library system
-     * @return List of all lenders
-     * HTTP Status: 200 (OK)
-     */
+    @Operation(summary = "Get all lenders", description = "Retrieves a list of all lenders registered in the library system")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of lenders",
+                    content = @Content(mediaType = "application/json", 
+                    schema = @Schema(implementation = Lender.class)))
+    })
     @GetMapping
     public List<Lender> getAllLenders() {
         return lenderService.getAllLenders();
     }
 
-    /**
-     * Retrieves a specific lender by their ID
-     * @param id The ID of the lender to retrieve
-     * @return The requested lender if found, null otherwise
-     * HTTP Status: 200 (OK)
-     */
+    @Operation(summary = "Get a lender by ID", description = "Retrieves a specific lender using their ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lender found",
+                    content = @Content(mediaType = "application/json", 
+                    schema = @Schema(implementation = Lender.class))),
+        @ApiResponse(responseCode = "404", description = "Lender not found",
+                    content = @Content)
+    })
     @GetMapping("/{id}")
-    public Lender getLenderById(@PathVariable Long id) {
+    public Lender getLenderById(
+            @Parameter(description = "ID of the lender to retrieve") @PathVariable Long id) {
         return lenderService.getLenderById(id);
     }
 
-    /**
-     * Adds a new lender to the library system
-     * @param lender The lender entity to be added
-     * @return The saved lender entity
-     * HTTP Status: 200 (OK)
-     */
+    @Operation(summary = "Add a new lender", description = "Registers a new lender in the library system")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lender successfully registered",
+                    content = @Content(mediaType = "application/json", 
+                    schema = @Schema(implementation = Lender.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid input data",
+                    content = @Content)
+    })
     @PostMapping
-    public Lender addLender(@RequestBody Lender lender) {
+    public Lender addLender(
+            @Parameter(description = "Lender details", required = true) 
+            @RequestBody Lender lender) {
         return lenderService.saveLender(lender);
     }
 
-    /**
-     * Deletes a lender from the library system
-     * @param id The ID of the lender to delete
-     * HTTP Status: 200 (OK)
-     */
+    @Operation(summary = "Delete a lender", description = "Removes a lender from the library system")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lender successfully deleted"),
+        @ApiResponse(responseCode = "404", description = "Lender not found",
+                    content = @Content)
+    })
     @DeleteMapping("/{id}")
-    public void deleteLender(@PathVariable Long id) {
+    public void deleteLender(
+            @Parameter(description = "ID of the lender to delete") @PathVariable Long id) {
         lenderService.deleteLender(id);
     }
 }
